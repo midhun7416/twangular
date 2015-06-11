@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Rendering Tweets with Angular & Node
 ===================
 
@@ -38,3 +39,7 @@ Resources
 - [Angular Developer Guide](https://docs.angularjs.org/guide)
 - [Twitter API User Timeline Documentaion](https://dev.twitter.com/docs/api/1.1/get/statuses/user_timeline)
 - [Twitter API oEmbed Documentation](https://dev.twitter.com/docs/api/1/get/statuses/oembed)
+=======
+# twangular
+A test app with angular, express and twitter
+>>>>>>> a1d288fc703d1f75f8e770f132f2edb19ee17555
