@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Twangular by obscure76</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Twangular</h1>
+      <h2 class="project-tagline">A test app with angular, express and twitter</h2>
+      <a href="https://github.com/obscure76/twangular" class="btn">View on GitHub</a>
+      <a href="https://github.com/obscure76/twangular/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/obscure76/twangular/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p>&lt;!doctype html&gt;
+
+</p>
+  
+  &lt;%= title %&gt;
+
+<pre><code>&lt;link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"&gt;
+&lt;link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"&gt;
+</code></pre>
+
+<p></p>
+
+<pre><code>&lt;script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular.min.js"&gt;&lt;/script&gt;
+&lt;script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular-resource.min.js"&gt;&lt;/script&gt;
+&lt;script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular-sanitize.min.js"&gt;&lt;/script&gt;
+&lt;script src="//cdnjs.cloudflare.com/ajax/libs/masonry/3.1.5/masonry.pkgd.min.js"&gt;&lt;/script&gt;
+&lt;script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"&gt;&lt;/script&gt;
+&lt;script src="//platform.twitter.com/widgets.js"&gt;&lt;/script&gt;
+&lt;!--script src="/javascripts/TweetSearch.js"&gt;&lt;/script--&gt;
+&lt;script src="/javascripts/TweetList.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>
+</p>
+
+<pre><code>&lt;!-- the root element of the view assigned to the TweetList javascript controller--&gt;
+&lt;div ng-controller="TweetList"&gt;
+
+    &lt;div class="row"&gt;
+        &lt;div class="col-lg-12"&gt;
+            &lt;h1&gt;&lt;img id="twitter-logo" src="images/Twitter_logo_white.png" /&gt;&lt;%= title %&gt;&lt;/h1&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+
+    &lt;div id="search-container" class="row"&gt;
+        &lt;div class="col-lg-3"&gt;
+
+            &lt;!-- this form will trigger the getTweets function in the javascript controller on submit --&gt;
+            &lt;form class="input-group" ng-submit="getTweets()" &gt;
+            &lt;span class="input-group-addon"&gt;@&lt;/span&gt;
+
+                &lt;!-- this text input is binded to a variable in the javascript controller --&gt;
+              &lt;input type="text" class="form-control" placeholder="TwitterDev" ng-model="username"&gt;
+
+                &lt;span class="input-group-btn"&gt;
+            &lt;button class="btn btn-default" type="submit"&gt;Get Tweets&lt;/button&gt;
+          &lt;/span&gt;
+
+            &lt;/form&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="row clearfix"&gt;
+        &lt;div class="col-lg-12"&gt;
+
+            &lt;div id="tweet-list"&gt;
+
+                &lt;!-- this div will repeat for every tweet object in the array using a template-expanding directive --&gt;
+                &lt;div ng-repeat="tweet in tweetsResult" class="tweet-item"&gt;
+
+                    &lt;!-- sanitized HTML binding --&gt;
+                        &lt;div ng-bind-html="tweet.oEmbed.html"&gt;&lt;/div&gt;
+
+                        &lt;!-- binding to Tweet source property --&gt;
+                        &lt;div class="tweet-details"&gt;
+                            Tweeted from &lt;span ng-bind-html="tweet.source"&gt;&lt;/span&gt;
+
+                            &lt;!-- play around with rendering different Tweet properties --&gt;
+                             &lt;p&gt;{{tweet.user.screen_name}}&lt;/p&gt; 
+                             &lt;!--p&gt;{{tweet.text}}&lt;/p--&gt; 
+                        &lt;/div&gt;
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+
+      &lt;/div&gt;
+   &lt;/div&gt;
+
+
+
+
+    &lt;div class="row"&gt;
+        &lt;div class="col-lg-12"&gt;
+
+            &lt;!-- this button will trigger the getMoreTweets function in the javascript controller --&gt;
+        &lt;button type="button" class="load-more-btn btn btn-default" ng-click="getMoreTweets()"&gt;Get More Tweets&lt;/button&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div ng-controller="TweetSearch"&gt;
+
+    &lt;div id="search-container" class="row"&gt;
+        &lt;div class="col=lg-3"&gt;
+            &lt;form class="input-group" ng-submit="search()" &gt;
+                &lt;span class="input-group-addon"&gt;#&lt;/span&gt;
+                &lt;input type="text" class="form-control" placeholder="twitter" ng-model="query"&gt;
+            &lt;/form&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="row clearfix"&gt;
+        &lt;div class="col-lg-12"&gt;
+            &lt;div id="tweet-list"&gt;
+                &lt;div ng-repeat="tweet in searchResult" class="tweet-item"&gt;
+                    &lt;div ng-bind-model="tweet.oEmbed.html"&gt;&lt;/div&gt;
+                    &lt;div class="tweet-details"&gt;
+                        Tweeted from &lt;span ng-bind-html="tweet.source"&gt;&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;         
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>
+</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/obscure76/twangular">Twangular</a> is maintained by <a href="https://github.com/obscure76">obscure76</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
